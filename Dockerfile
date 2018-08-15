@@ -1,5 +1,5 @@
 # create image based on official node 8 image from Docker
-FROM node:8
+FROM node:8.11.3-alpine
 
 # set environment
 ENV NPM_CONFIG_LOGLEVEL warn
