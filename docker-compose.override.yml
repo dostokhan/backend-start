@@ -1,0 +1,6 @@
+version: '3'
+services:
+  backend:
+    environment:
+      NODE_ENV: "development"
+      VIRTUAL_HOST: "local.api.fullstack.com"
