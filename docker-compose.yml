@@ -1,14 +1,25 @@
-version: '3'
+version: '3.3'
+
+
 services:
-  backend:
+  fullstack-backend:
+    container_name: fullstack-backend
+    image: fullstack-backend
     build: .
     expose:
       - 8000
     volumes:
      - .:/home/app
      - node_modules:/home/app/node_modules
-    environment:
-      VIRTUAL_PORT: "8000"
+    links:
+      - fullstack-postgres
+
+  fullstack-postgres:
+    container_name: fullstack-postgres
+    image: postgres:10
+    volumes:
+      - ./volumes/data:/var/lib/postgresql/data
+
 
 volumes: 
   node_modules:

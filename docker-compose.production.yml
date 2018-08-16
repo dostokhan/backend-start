@@ -1,8 +1,8 @@
 version: '3'
 services:
-  backend:
+  fullstack-backend:
     environment:
       NODE_ENV: "production"
-      VIRTUAL_HOST: "api.fullstack.com"
-      LETSENCRYPT_HOST: "api.fullstack.com"
-      LETSENCRYPT_EMAIL: "fullstack.com@gmail.com"
+      VIRTUAL_HOST: "fullstackapi.imonir.com"
+      LETSENCRYPT_HOST: "fullstackapi.imonir.com"
+      LETSENCRYPT_EMAIL: "imonir.com@gmail.com"

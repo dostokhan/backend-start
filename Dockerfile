@@ -1,5 +1,7 @@
 # create image based on official node 8 image from Docker
-FROM node:8.11.3-alpine
+FROM node:8
+# TODO: alpine image doesn't work
+# FROM mhart/alpine-node:8
 
 # set environment
 ENV NPM_CONFIG_LOGLEVEL warn
