@@ -1,12 +1,9 @@
 #!/usr/bin/env python
 
-import subprocess
-from os.path import dirname, abspath
-from os import chdir
+from subprocess import call
+import utils
 
-chdir(dirname(dirname(abspath(__file__))))
-
+utils.goToParentDir()
 
 showLog = 'docker-compose exec fullstack-backend bash'
-
-subprocess.call(showLog.split())
+call(showLog.split())

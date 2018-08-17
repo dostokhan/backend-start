@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 
 import subprocess
-from os.path import dirname, abspath
-from os import chdir
+import utils
 
-chdir(dirname(dirname(abspath(__file__))))
+utils.goToParentDir()
 
 print('Removing backend_node_modules VOLUME')
 removeVolume = 'docker volume rm backend_node_modules'
