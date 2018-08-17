@@ -1,16 +1,17 @@
 {
-  "name": "fullstack",
+  "name": "imonir.back",
   "version": "1.0.0",
-  "description": "node api start kit",
+  "description": "node start kit",
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=. nodemon index.js",
     "build": "NODE_PATH=. NODE_ENV=production nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sequelize": "sequelize"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/dostokhan/fullstack-start.git"
+    "url": "git+ssh://git@github.com/dostokhan/imonir.back.git"
   },
   "keywords": [
     "node",
@@ -19,11 +20,10 @@
   "author": "Moniruzzaman Monir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dostokhan/fullstack-start/issues"
+    "url": "https://github.com/dostokhan/imonir.back/issues"
   },
-  "homepage": "https://github.com/dostokhan/fullstack-start#readme",
+  "homepage": "https://github.com/dostokhan/imonir.back#readme",
   "dependencies": {
-    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "compression": "^1.7.1",
     "cookie-parser": "^1.4.3",
@@ -37,17 +37,16 @@
     "http-status": "^1.2.0",
     "jsonwebtoken": "^8.1.0",
     "kue": "^0.11.6",
-    "mongodb": "^2.2.33",
-    "mongoose": "^4.12.6",
     "morgan": "^1.9.0",
     "octonode": "^0.9.1",
     "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "passport-facebook-token": "^3.3.0",
-    "passport-github": "^1.1.0",
+    "pg": "^7.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.38.0",
     "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "sequelize-cli": "^4.0.0"
   }
 }

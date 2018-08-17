@@ -1,9 +1,5 @@
-// const db = require('sqlite');
-// const Promise = require('bluebird');
-
-
 const {
-  // env,
+  env,
   port,
 } = require('./config/vars');
 /**
@@ -11,9 +7,11 @@ const {
  */
 const server = require('./config/express');
 
+
 server.listen(port, () => {
   console.warn('we are ready :)');
 });
+
 // Promise.resolve()
 //   // First, try to open the database
 //   .then(() => db.open('./database.sqlite', { Promise, cached: true }))
