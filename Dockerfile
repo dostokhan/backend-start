@@ -1,5 +1,5 @@
 # create image based on official node 8 image from Docker
-FROM node:8
+FROM node:8.10
 # TODO: alpine image doesn't work
 # FROM mhart/alpine-node:8
 

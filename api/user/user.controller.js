@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 // const { omit } = require('lodash');
 // const Note = require('./note.model');
-const Khobor = require('db/models').Khobor;
+const User = require('db/models').User;
 // const User = require('db/models').User;
 // const {
 //   getNoteContent,
@@ -81,8 +81,8 @@ const Khobor = require('db/models').Khobor;
  * @public
  */
 exports.list = async (req, res) => {
-  return Khobor.findAll()
-    .then(khobors => res.status(200).send(khobors))
+  return User.findAll()
+    .then(users => res.status(200).send(users))
     .catch(error => res.status(400).send(error));
 };
 

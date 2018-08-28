@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
-from subprocess import call
+from subprocess import Popen, PIPE
 import utils
+import os
 
 utils.goToParentDir()
 #  runProduction = isProduction()
@@ -10,10 +11,12 @@ utils.goToParentDir()
 #  subprocess.check_output(['bash','-c', createNetwork])
 
 #  if runProduction
-#      startProxyContainers = 'docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d'
+#      startProxyContainers = 'CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d'
 #  else:
-startProxyContainers = 'docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d'
+startProxyContainers = f"CURRENT_UID={str(os.geteuid())}:{str(os.getegid())} docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d"
 
-call(startProxyContainers.split())
+#  process = Popen(startProxyContainers.split(), stdout=PIPE)
+#  output, error = process.comunicate()
+os.system(startProxyContainers);
 
 print('backend Up')

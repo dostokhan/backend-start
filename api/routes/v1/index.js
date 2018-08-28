@@ -1,6 +1,8 @@
 const express = require('express');
-const khoborRoutes = require('api/khobor/khobor.route');
+
 // const authRoutes = require('api/auth/auth.route');
+const userRoutes = require('api/user/user.route');
+const khoborRoutes = require('api/khobor/khobor.route');
 const statusMonitor = require('express-status-monitor')({ path: '' });
 const auth = require('http-auth');
 const {
@@ -29,7 +31,8 @@ router.get('/status', auth.connect(basic), statusMonitor.pageRoute);
 // router.use('/docs', express.static('docs'));
 
 
-router.use('/khobor', khoborRoutes);
 // router.use('/auth', authRoutes);
+router.use('/user', userRoutes);
+router.use('/khobor', khoborRoutes);
 
 module.exports = router;

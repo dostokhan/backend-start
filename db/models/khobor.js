@@ -1,9 +1,11 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Khobor = sequelize.define('Khobor', {
+  var Khobor = sequelize.define('Khobor', {
     link: DataTypes.STRING,
+    domain: DataTypes.STRING
   }, {});
-  // Khobor.associate = (models) => {
-  //   // associations can be defined here
-  // };
+  Khobor.associate = function(models) {
+    // associations can be defined here
+  };
   return Khobor;
 };

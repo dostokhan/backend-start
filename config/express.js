@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
-// const passport = require('passport');
+const passport = require('passport');
 const cookieParser = require('cookie-parser');
 // const methodOverride = require('method-override');
 // INSTALL THESE
@@ -15,12 +15,13 @@ const {
   corsOrigin,
 } = require('./vars');
 
-// discard below line and uncomment following line
-// require('./passport');
-// const strategies = require('./passport');
 
 // create express server
 const server = express();
+
+// configure passport
+// require('./passport');
+// const strategies = require('./passport');
 
 // request logging. dev: console | production: file
 server.use(morgan('combined'));
@@ -59,11 +60,21 @@ server.use(
   }),
 );
 
-// enable authentication
-// server.use(passport.initialize());
+// enable authentication with passport
+server.use(passport.initialize());
+server.use(passport.session());
 // passport.use('jwt', strategies.jwt);
 // passport.use('facebook', strategies.facebook);
 // passport.use('google', strategies.google);
+passport.serializeUser(function(user, cb) {
+  cb(null, user.id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  User.findById(id, function(err, user) {
+    cb(err, user);
+  });
+});
 
 
 server.use('/v1', routes);
