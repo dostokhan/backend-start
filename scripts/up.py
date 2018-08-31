@@ -13,7 +13,8 @@ utils.goToParentDir()
 #  if runProduction
 #      startProxyContainers = 'CURRENT_UID=$(id -u):$(id -g) docker-compose -f docker-compose.yml -f docker-compose.production.yml up -d'
 #  else:
-startProxyContainers = f"CURRENT_UID={str(os.geteuid())}:{str(os.getegid())} docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d"
+#  startProxyContainers = f"CURRENT_UID={str(os.geteuid())}:{str(os.getegid())} docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d"
+startProxyContainers = 'docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d'
 
 #  process = Popen(startProxyContainers.split(), stdout=PIPE)
 #  output, error = process.comunicate()
