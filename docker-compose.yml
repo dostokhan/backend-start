@@ -13,14 +13,14 @@ services:
      - node_modules:/home/app/node_modules
     links:
       - fullstack-postgres
-    user: 
-      ${CURRENT_UID}
+    # user: 
+    #   ${CURRENT_UID}
 
   fullstack-postgres:
     container_name: fullstack-postgres
     image: postgres:10
     volumes:
-      - ./volumes/data:/var/lib/postgresql/data
+      - ./volumes/db:/var/lib/postgresql/data
 
 
 volumes: 
