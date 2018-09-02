@@ -1,5 +1,5 @@
 # backend starter kit with NodeJS for easy prototyping apis
-### - ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) Work in Progress 
+### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) Work in Progress 
 **updated: sep 2, 2018**
 
 A naive approach to building an api starter kit to quickly start side projects.
