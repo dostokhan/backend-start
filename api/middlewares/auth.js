@@ -1,4 +1,4 @@
-// const httpStatus = require('http-status');
+const httpStatus = require('http-status');
 // const passport = require('passport');
 const expressJwt = require('express-jwt');
 
@@ -12,12 +12,16 @@ exports.authorize = (credentialsRequired = true) =>
     secret: jwtSecret,
     requestProperty: 'auth',
     credentialsRequired,
-    getToken: (req) => {
+    // fail: (req, res) => {
+    //   res.send(401);
+    // },
+    getToken: (req, res) => {
       console.log(`mj-token: ${req.headers['mj-token']}`);
 
       if (req.headers['mj-token']) {
         return req.headers['mj-token'];
       }
+
       return null;
     },
   });
