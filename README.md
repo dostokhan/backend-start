@@ -1,10 +1,10 @@
 # backend starter kit with NodeJS for easy prototyping apis
-### Work in Progress 
+### ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) Work in Progress 
 **updated: sep 2, 2018**
 
 A naive approach to building an api starter kit to quickly start side projects.
 Meant to be used with [fullstack-start](https://github.com/dostokhan/fullstack-start) project.
-Javascript is choosen as the language to minimize fatigue working on both frontend and backend.
+Javascript is choosen to minimize fatigue working on both frontend and backend.
 
 ## Table of Contents
   - [Folder Structure](#folder-structure)
