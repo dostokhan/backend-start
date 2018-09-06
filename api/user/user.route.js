@@ -28,9 +28,13 @@ const router = express.Router();
 //   .post(authorize(), controller.create);
 
 router
-  .route('/')
-  .get(authorize(), controller.get);
+  .route('/:username')
+  .get(controller.get);
   // .get(authorize(false), controller.list);
+
+// router
+//   .route('/self')
+//   .get(authorize(true), controller.self);
 
 // router
 //   .route('/:id')

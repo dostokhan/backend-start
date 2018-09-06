@@ -13,25 +13,22 @@ const User = require('db/models').User;
  * Get user
  * @public
  */
-exports.get = async (req, res) => {
-  res.json({ message: 'Success' });
-  // const key = req.params.id;
-  // try {
-  //   const note = await Note.get(key);
-  //   console.log(note);
 
-  //   let content;
-  //   try {
-  //     content = await getNoteContent(note.slug);
-  //   } catch (err) {
-  //     console.log(err);
-  //     res.status(httpStatus.NOTE_FOUND).end();
-  //   }
-
-  //   res.status(httpStatus.OK).json({ note, content });
-  // } catch (err) {
-  //   res.status(httpStatus.NOT_FOUND).end();
-  // }
+// exports.get = async (req, res) => {
+exports.get = (req, res) => {
+  const username = req.params.username;
+  User.findOne({
+    where: { username },
+    play: true,
+    // attributes: ['id', 'username', 'email'],
+  })
+  .then((user) => {
+    res.status(httpStatus.OK).json({ user });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(httpStatus.NOT_FOUND).end();
+  });
 };
 
 
