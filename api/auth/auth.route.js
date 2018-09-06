@@ -5,8 +5,17 @@ const router = express.Router();
 
 
 router
-  .route('/facebook')
-  .post(controller.authenticate);
+  .route('/signin')
+  .post(controller.signin);
+
+
+// router
+//   .route('/signup')
+//   .post(controller.signup);
+
+// router
+//   .route('/signout')
+//   .post(controller.signout);
 
 
 module.exports = router;

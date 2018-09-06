@@ -10,21 +10,39 @@ const cookieParser = require('cookie-parser');
 // const helmet = require('helmet');
 // INSTALL END
 
-const routes = require('../api/routes/v1');
+const {
+  errorHandler,
+} = require('api/middlewares/error');
+const routes = require('api/routes/v1');
 const {
   corsOrigin,
-} = require('./vars');
+} = require('config/vars');
 
 
 // create express server
 const server = express();
 
+// enable authentication with passport
+server.use(passport.initialize());
+// server.use(passport.session());
 // configure passport
 // require('./passport');
-// const strategies = require('./passport');
+const strategies = require('./passport');
+passport.use(strategies.jwt);
+// passport.serializeUser(function(user, cb) {
+//   cb(null, user.id);
+// });
+// passport.deserializeUser(function(id, cb) {
+//   User.findById(id, function(err, user) {
+//     cb(err, user);
+//   });
+// });
 
 // request logging. dev: console | production: file
 server.use(morgan('combined'));
+
+
+
 
 // parse body params and attache them to req.body
 server.use(bodyParser.json());
@@ -60,24 +78,10 @@ server.use(
   }),
 );
 
-// enable authentication with passport
-server.use(passport.initialize());
-server.use(passport.session());
-// passport.use('jwt', strategies.jwt);
-// passport.use('facebook', strategies.facebook);
-// passport.use('google', strategies.google);
-passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
-});
-
-passport.deserializeUser(function(id, cb) {
-  User.findById(id, function(err, user) {
-    cb(err, user);
-  });
-});
-
 
 server.use('/v1', routes);
+
+server.use(errorHandler);
 
 module.exports = server;
 

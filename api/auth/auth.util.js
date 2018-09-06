@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const {
   jwtSecret,
-} = require('../../config/vars');
+} = require('config/vars');
 
 const getSignedToken = auth =>
   jwt.sign(

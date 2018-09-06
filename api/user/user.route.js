@@ -1,11 +1,11 @@
 const express = require('express');
 // const validate = require('express-validation');
 const controller = require('./user.controller');
-// const {
-//   authorize,
-//   // ADMIN,
-//   // LOGGED_USER,
-// } = require('api/middlewares/auth');
+const {
+  authorize,
+  // ADMIN,
+  // LOGGED_USER,
+} = require('api/middlewares/auth');
 // const {
   // listUsers,
   // createUser,
@@ -28,8 +28,8 @@ const router = express.Router();
 //   .post(authorize(), controller.create);
 
 router
-  .route('/list')
-  .get(controller.list);
+  .route('/')
+  .get(authorize(), controller.get);
   // .get(authorize(false), controller.list);
 
 // router

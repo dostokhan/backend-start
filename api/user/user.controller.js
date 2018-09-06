@@ -13,25 +13,26 @@ const User = require('db/models').User;
  * Get user
  * @public
  */
-// exports.get = async (req, res) => {
-//   const key = req.params.id;
-//   try {
-//     const note = await Note.get(key);
-//     console.log(note);
+exports.get = async (req, res) => {
+  res.json({ message: 'Success' });
+  // const key = req.params.id;
+  // try {
+  //   const note = await Note.get(key);
+  //   console.log(note);
 
-//     let content;
-//     try {
-//       content = await getNoteContent(note.slug);
-//     } catch (err) {
-//       console.log(err);
-//       res.status(httpStatus.NOTE_FOUND).end();
-//     }
+  //   let content;
+  //   try {
+  //     content = await getNoteContent(note.slug);
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(httpStatus.NOTE_FOUND).end();
+  //   }
 
-//     res.status(httpStatus.OK).json({ note, content });
-//   } catch (err) {
-//     res.status(httpStatus.NOT_FOUND).end();
-//   }
-// };
+  //   res.status(httpStatus.OK).json({ note, content });
+  // } catch (err) {
+  //   res.status(httpStatus.NOT_FOUND).end();
+  // }
+};
 
 
 /**
