@@ -32,9 +32,9 @@ router
   .get(controller.list);
   // .get(authorize(false), controller.list);
 
-// router
-//   .route('/:id')
-//   .get(controller.get)
+router
+  .route('/user/:username')
+  .get(controller.getByUser)
 //   // .put(authorize(LOGGED_USER), validate(replaceUser), controller.replace)
 //   // .patch(authorize(LOGGED_USER), validate(updateUser), controller.update)
 //   // .delete(authorize(LOGGED_USER), controller.remove);

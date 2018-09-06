@@ -1,12 +1,7 @@
 const httpStatus = require('http-status');
 // const { omit } = require('lodash');
-// const Note = require('./note.model');
 const User = require('db/models').User;
-// const User = require('db/models').User;
-// const {
-//   getNoteContent,
-// } = require('./note.util');
-// const { handler: errorHandler } = require('../middlewares/error');
+const Khobor = require('db/models').Khobor;
 
 
 /**
@@ -19,8 +14,8 @@ exports.get = (req, res) => {
   const username = req.params.username;
   User.findOne({
     where: { username },
-    play: true,
-    // attributes: ['id', 'username', 'email'],
+    attributes: ['id', 'username', 'email'],
+    include: [{ model: Khobor, required: true }],
   })
   .then((user) => {
     res.status(httpStatus.OK).json({ user });

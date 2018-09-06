@@ -1,12 +1,39 @@
 const httpStatus = require('http-status');
 // const { omit } = require('lodash');
-// const Note = require('./note.model');
 const Khobor = require('db/models').Khobor;
-// const User = require('db/models').User;
-// const {
-//   getNoteContent,
-// } = require('./note.util');
+const User = require('db/models').User;
 // const { handler: errorHandler } = require('../middlewares/error');
+
+
+/**
+ * Get list
+ * @public
+ */
+exports.list = async (req, res) => {
+  return Khobor.findAll({
+    include: [{ model: User, attributes: { exclude: ["password"] }, required: true }],
+  })
+    .then(khobors => res.status(200).send(khobors))
+    .catch(error => res.status(400).send(error));
+};
+
+/**
+ * Get list by user
+ * @public
+ */
+exports.getByUser = async (req, res) => {
+  const username = req.params.username;
+  console.log(req.params);
+
+  return User.findOne({
+    where: { username },
+    include: [{
+      model: Khobor
+    }],
+  })
+    .then(khobors => res.status(200).send(khobors))
+    .catch(error => res.status(400).send(error));
+};
 
 
 /**
@@ -77,33 +104,6 @@ const Khobor = require('db/models').Khobor;
 // };
 
 /**
- * Get list
- * @public
- */
-exports.list = async (req, res) => {
-  return Khobor.findAll()
-    .then(khobors => res.status(200).send(khobors))
-    .catch(error => res.status(400).send(error));
-};
-
-// exports.list = async (req, res) => {
-//   try {
-//     console.log('LIST ALL KHOBORS');
-//     const khoborList = await User.findAll();
-//     console.log('ran query');
-//     console.log(KhoborList);
-
-//     res.status(httpStatus.OK).send(khoborList);
-
-//     // const notes = await Note.list(req.auth);
-//     // const transformedUsers = users.map(user => user.transform());
-//     // res.json({ hola: 'amigo'});
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// };
-
-/**
  * Delete user
  * @public
  */
@@ -116,3 +116,4 @@ exports.list = async (req, res) => {
 
 //   res.status(httpStatus.NO_CONTENT).end();
 // };
+

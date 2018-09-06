@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Khobor.associate = function(models) {
     // associations can be defined here
+    Khobor.belongsTo(models.User);
   };
   return Khobor;
 };
