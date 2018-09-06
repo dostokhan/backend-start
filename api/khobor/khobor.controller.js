@@ -9,8 +9,11 @@ const User = require('db/models').User;
  * Get list
  * @public
  */
-exports.list = async (req, res) => {
+exports.get = async (req, res) => {
+  console.log(req.query);
+
   return Khobor.findAll({
+    where: req.query,
     include: [{ model: User, attributes: { exclude: ["password"] }, required: true }],
   })
     .then(khobors => res.status(200).send(khobors))

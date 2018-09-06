@@ -15,7 +15,7 @@ exports.get = (req, res) => {
   User.findOne({
     where: { username },
     attributes: ['id', 'username', 'email'],
-    include: [{ model: Khobor, required: true }],
+    // include: [{ model: Khobor, required: true }],
   })
   .then((user) => {
     res.status(httpStatus.OK).json({ user });

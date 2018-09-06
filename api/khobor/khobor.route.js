@@ -28,8 +28,8 @@ const router = express.Router();
 //   .post(authorize(), controller.create);
 
 router
-  .route('/list')
-  .get(controller.list);
+  .route('/')
+  .get(controller.get);
   // .get(authorize(false), controller.list);
 
 router
