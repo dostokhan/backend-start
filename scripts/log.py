@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import subprocess
+from subprocess import call
 import utils
 
 utils.goToParentDir()
 
 showLog = 'docker-compose logs --follow fullstack-backend'
-subprocess.call(showLog.split())
+call(showLog.split())

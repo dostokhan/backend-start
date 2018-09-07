@@ -2,20 +2,14 @@
 
 from subprocess import call
 import utils
-#  , isProduction
 
 utils.goToParentDir()
 #  runProduction = isProduction()
 
 #  if runProduction
 #      print("Production Config")
-#      stopProxyContainers = 'docker-compose -f docker-compose.yml -f docker-compose.production.yml down'
+#      stopBackendContainers = 'docker-compose -f docker-compose.yml -f docker-compose.production.yml down'
 #  else:
-print("Development Config")
-stopProxyContainers = 'docker-compose -f docker-compose.yml -f docker-compose.override.yml down'
-
-
-#  subprocess.check_output(['bash', '-c', stopProxyContainers])
-call(stopProxyContainers.split())
-
+stopBackendContainers = 'docker-compose -f docker-compose.yml -f docker-compose.override.yml down'
+call(stopBackendContainers.split())
 print('backend Down')
