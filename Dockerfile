@@ -7,17 +7,25 @@ FROM node:8.10
 ENV NPM_CONFIG_LOGLEVEL warn
 # ARG env
 # ENV NOTE_ENV $env
-ENV APP=/home/app
 
-#copy dependency lock files
-COPY ./package.json $APP/package.json
-COPY ./yarn.lock $APP/yarn.lock
 
-# move to app dir
-WORKDIR $APP
+
+
+# install dependencies first, in a different location for easier app bind mounting for local development
+WORKDIR /home
+COPY package.json yarn.lock* ./
+RUN yarn install && yarn cache clean
+ENV PATH /home/node_modules/.bin:$PATH
+
+# check every 30s to ensure this service returns HTTP 200
+# HEALTHCHECK --interval=30s CMD node healthcheck.js
+
+# copy in our source code last, as it changes the most
+WORKDIR /home/app
+COPY . /home/app
 
 # install dependencies for app
-RUN yarn --pure-lockfile
+# RUN yarn --pure-lockfile
 
 
 # run app
@@ -25,7 +33,7 @@ CMD [ -f "/bin/bash" ] && if [ ${NODE_ENV} = production ]; \
   then \
   yarn build; \
   else \
-  yarn --pure-lockfile; yarn start; \
+  yarn start; \
   fi
 # yarn install; yarn start; \
 
