@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const httpStatus = require('http-status');
 const passport = require('passport');
 const User = require('db/models').User;
@@ -20,12 +21,22 @@ exports.signin = (req, res, next) => {
     where: { username },
     attributes: ['id', 'username', 'email', 'password'],
     }).then((user) => {
-      if (!user || (user.password != password)) {
+      if (!user) {
         // return done(null, false);
         res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+      } else {
+
+        bcrypt.compare(password, user.password, (err, check) => {
+          if (err) {
+            res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+          } else if (check) {
+            const token = getSignedToken({ id: user.id, username: user.username });
+            res.status(httpStatus.OK).send({ token });
+          } else {
+            res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+          }
+        });
       }
-      const token = getSignedToken({ id: user.id, username: user.username });
-      res.status(httpStatus.OK).send({ token });
 
       // return next(null, user);
     });

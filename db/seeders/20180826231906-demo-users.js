@@ -1,4 +1,5 @@
-'use strict';
+const { hashPasswordSync } = require('api/auth/auth.util');
+
 const users = [{
   username: 'fullstack',
   password: 'fullstack',
@@ -9,7 +10,11 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert(
       'Users',
-      users,
+      users.map(user => ({
+        username: user.username,
+        password: hashPasswordSync(user.password),
+        email: user.email,
+      })),
       {},
     );
   },
