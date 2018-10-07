@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 const httpStatus = require('http-status');
 const passport = require('passport');
-const User = require('db/models').User;
+// const User = require('db/models').User;
 
-const {
-  getSignedToken,
-} = require('./auth.util');
+// const {
+//   getSignedToken,
+// } = require('./auth.util');
 
 
 
@@ -17,29 +17,31 @@ exports.signin = (req, res, next) => {
   console.log(`username: ${username}`);
   console.log(`password: ${password}`);
 
-  User.findOne({
-    where: { username },
-    attributes: ['id', 'username', 'email', 'password'],
-    }).then((user) => {
-      if (!user) {
-        // return done(null, false);
-        res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-      } else {
+  res.send({ok: 'message'});
 
-        bcrypt.compare(password, user.password, (err, check) => {
-          if (err) {
-            res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-          } else if (check) {
-            const token = getSignedToken({ id: user.id, username: user.username });
-            res.status(httpStatus.OK).send({ token });
-          } else {
-            res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-          }
-        });
-      }
+  // User.findOne({
+  //   where: { username },
+  //   attributes: ['id', 'username', 'email', 'password'],
+  //   }).then((user) => {
+  //     if (!user) {
+  //       // return done(null, false);
+  //       res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+  //     } else {
 
-      // return next(null, user);
-    });
+  //       bcrypt.compare(password, user.password, (err, check) => {
+  //         if (err) {
+  //           res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+  //         } else if (check) {
+  //           const token = getSignedToken({ id: user.id, username: user.username });
+  //           res.status(httpStatus.OK).send({ token });
+  //         } else {
+  //           res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+  //         }
+  //       });
+  //     }
+
+  //     // return next(null, user);
+  //   });
 
   // // res.status(httpStatus.OK).json({ token: 'validtoken' });
 

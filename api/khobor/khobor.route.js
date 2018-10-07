@@ -30,11 +30,14 @@ const router = express.Router();
 router
   .route('/')
   .get(controller.get);
+  // .get((req, res) => {
+  //   res.send({ hola: 'amigo' });
+  // });
   // .get(authorize(false), controller.list);
 
-router
-  .route('/user/:username')
-  .get(controller.getByUser)
+// router
+//   .route('/user/:username')
+//   .get(controller.getByUser)
 //   // .put(authorize(LOGGED_USER), validate(replaceUser), controller.replace)
 //   // .patch(authorize(LOGGED_USER), validate(updateUser), controller.update)
 //   // .delete(authorize(LOGGED_USER), controller.remove);

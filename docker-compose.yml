@@ -24,19 +24,29 @@ services:
       - ./package.json:/home/app/package.json
       - ./yarn.lock:/home/app/yarn.lock
     links:
-      - fullstack-postgres
+      # - fullstack-postgres
+      - fullstack-mongo
     # user: 
     #   ${CURRENT_UID}
 
-  fullstack-postgres:
-    container_name: fullstack-postgres
-    image: postgres:10
+  fullstack-mongo:
+    container_name: fullstack-mongo
+    image: 'bitnami/mongodb:latest'
+    ports:
+      - "27017:27017"
     volumes:
-      - ./volumes/db:/var/lib/postgresql/data
+      - ./volumes/mongo:/data/db
+
+  # fullstack-postgres:
+  #   container_name: fullstack-postgres
+  #   image: postgres:10
+  #   volumes:
+  #     - ./volumes/db:/var/lib/postgresql/data
 
 
 volumes: 
   notused_node_modules:
+  data-volume:
 
 networks:
   default:

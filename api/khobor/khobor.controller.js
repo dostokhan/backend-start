@@ -1,21 +1,24 @@
 const httpStatus = require('http-status');
 // const { omit } = require('lodash');
-const Khobor = require('db/models').Khobor;
-const User = require('db/models').User;
+const Khobor = require('db/models/khobor');
+const User = require('db/models/user');
+const makeLogger = require('helpers/debugger');
 // const { handler: errorHandler } = require('../middlewares/error');
 
+const debuggerDb = makeLogger('app:database');
 
 /**
  * Get list
  * @public
  */
 exports.get = async (req, res) => {
-  console.log(req.query);
+  debuggerDb('Query khobor list');
 
-  return Khobor.findAll({
-    where: req.query,
-    include: [{ model: User, attributes: { exclude: ["password"] }, required: true }],
-  })
+  return Khobor.find({})
+  // return Khobor.find({
+  //   where: req.query,
+  //   // include: [{ model: User, attributes: { exclude: ["password"] }, required: true }],
+  // })
     .then(khobors => res.status(200).send(khobors))
     .catch(error => res.status(400).send(error));
 };

@@ -5,15 +5,8 @@ const envFile = process.env.NODE_ENV === 'production' ?
   '../.env.production' :
   '../.env.development';
 
-// console.log('env file' + envFile);
 dotenv.load({ path: path.join(__dirname, envFile) });
 
-
-// import .env variables
-// require('dotenv-safe').load({
-//   path: path.join(__dirname, '../../.env'),
-//   sample: path.join(__dirname, '../../.env.example'),
-// });
 
 module.exports = {
   env: process.env.NODE_ENV,
@@ -25,6 +18,11 @@ module.exports = {
   authUser: process.env.HTTP_AUTH_USER,
   authPassword: process.env.HTTP_AUTH_PASSWORD,
   fbUserId: process.env.FACEBOOK_USERID,
+  debuggers: process.env.DEBUG.split(','),
+
+  dbUser: process.env.MONGODB_USERNAME,
+  dbPass: process.env.MONGODB_PASSWORD,
+  dbName: process.env.MONGODB_DATABASE,
   // jwtExpirationInterval: process.env.JWT_EXPIRATION_MINUTES,
   // mongo: {
   //   uri: process.env.NODE_ENV === 'test'
