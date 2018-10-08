@@ -18,7 +18,7 @@ module.exports = {
   authUser: process.env.HTTP_AUTH_USER,
   authPassword: process.env.HTTP_AUTH_PASSWORD,
   fbUserId: process.env.FACEBOOK_USERID,
-  debuggers: process.env.DEBUG.split(','),
+  debuggers: process.env.DEBUG.split(' '),
 
   dbUser: process.env.MONGODB_USERNAME,
   dbPass: process.env.MONGODB_PASSWORD,

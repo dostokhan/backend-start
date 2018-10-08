@@ -9,6 +9,12 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 
 const {
+  debugDb,
+  debugApi,
+  debugInit,
+} = require('helpers/debugger');
+// const makeLogger = require('helpers/debugger');
+const {
    errorHandler,
 } = require('api/middlewares/error');
 const routes = require('api/routes/v1');
@@ -20,6 +26,7 @@ const {
 } = require('config/vars');
 
 
+// const debugDb = makeLogger('app:database');
 // create express server
 const server = express();
 
@@ -40,7 +47,8 @@ passport.use(strategies.jwt);
 // });
 
 // request logging. dev: console | production: file
-server.use(morgan('combined'));
+server.use(morgan('dev'));
+// server.use(morgan('dev', { stream: { write: msg => debugApi(msg) } }));
 
 
 // parse body params and attache them to req.body
@@ -58,12 +66,14 @@ server.use(compression());
 server.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
+// debugInit('CORS whitelist: ', corsOrigin);
 server.use(
   cors({
-    origin(origin, cb) {
+    origin: (origin, cb) => {
       const whitelist = corsOrigin
         ? corsOrigin.split(',')
         : [];
+      debugInit('CORS whitelist: ', whitelist);
       cb(null, whitelist.includes(origin));
     },
     methods: 'GET, POST, PATCH, DELETE',
@@ -76,17 +86,24 @@ server.use(
 //Set up default mongoose connection
 //mongoose.connect('mongodb://username:password@host:port/database');
 const dbURI = `mongodb://${dbUser}:${dbPass}@fullstack-mongo:27017/${dbName}`;
-console.log(dbURI);
 mongoose.connect(dbURI, {
   useNewUrlParser: true,
-  auto_reconnect: true,
+  autoReconnect: true,
+  reconnectInterval: 1000,
+  reconnectTries: 100,
 });
+mongoose.set('useCreateIndex', true);
 // Get Mongoose to use the global promise library
 mongoose.Promise = global.Promise;
 //Get the default connection
 const db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('error', () => {
+  debugDb('MongoDB connection error:')
+});
+db.on('open', () => {
+  debugDb('Database Connected');
+})
 
 
 

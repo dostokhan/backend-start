@@ -1,49 +1,75 @@
 const bcrypt = require('bcrypt');
 const httpStatus = require('http-status');
 const passport = require('passport');
-// const User = require('db/models').User;
+const User = require('db/models/user');
 
-// const {
-//   getSignedToken,
-// } = require('./auth.util');
+const {
+  debugApi,
+} = require('helpers/debugger');
+const {
+  getSignedToken,
+  hashPassword
+} = require('./auth.util');
 
 
+exports.signup = async (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  debugApi(`signUp user: ${username}`);
+
+  const hashedPassword = await hashPassword(password);
+  debugApi('hashed password: %s', hashedPassword);
+  const newUser = new User({
+    username,
+    password: hashedPassword,
+  });
+
+
+  newUser.save()
+    .then((user) => {
+      const token = getSignedToken({ id: user.id, username: user.username });
+      res.status(httpStatus.OK).send({ token });
+    })
+    .catch((err) => {
+      debugApi('Failed', err);
+      next('Something went wrong');
+      // res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
+    });
+};
 
 
 
 exports.signin = (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(`username: ${username}`);
-  console.log(`password: ${password}`);
+  debugApi(`signIn user: ${username}`);
 
-  res.send({ok: 'message'});
+  // User.findById("5bba6def895ae10123f586be")
+  User.findOne({ username })
+    .then((user) => {
+      if (!user) {
+        debugApi('NO USER');
+        next(null, false);
+      } else {
 
-  // User.findOne({
-  //   where: { username },
-  //   attributes: ['id', 'username', 'email', 'password'],
-  //   }).then((user) => {
-  //     if (!user) {
-  //       // return done(null, false);
-  //       res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-  //     } else {
+        bcrypt.compare(password, user.password, (err, check) => {
+          if (err) {
+            debugApi('PASSWORD WRONG');
+            next(null, false);
+          } else if (check) {
+            const token = getSignedToken({ id: user.id, username: user.username });
+            res.status(httpStatus.OK).send({ token });
+          } else {
+            debugApi('HASH FAILED');
+            next(null, false);
+          }
+        });
+      }
 
-  //       bcrypt.compare(password, user.password, (err, check) => {
-  //         if (err) {
-  //           res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-  //         } else if (check) {
-  //           const token = getSignedToken({ id: user.id, username: user.username });
-  //           res.status(httpStatus.OK).send({ token });
-  //         } else {
-  //           res.status(httpStatus.NOT_FOUND).send({ msg: 'Failed' });
-  //         }
-  //       });
-  //     }
+      // return next(null, user);
+    });
 
-  //     // return next(null, user);
-  //   });
-
-  // // res.status(httpStatus.OK).json({ token: 'validtoken' });
+  // res.status(httpStatus.OK).json({ token: 'validtoken' });
 
   // passport.authenticate('jwt', { session: false }, (req, res) => {
   //   console.log(re);

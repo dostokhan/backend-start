@@ -1,28 +1,47 @@
-// lib/debuggers.js
 const debug = require('debug');
 
-const init = debug('app:init');
-const db = debug('app:database');
+const debugInit = debug('app:init');
+const debugDb = debug('app:database');
+const debugApi = debug('app:api');
+const debugError = debug('app:error');
+const debugCommon = debug('app:common');
 
 
-const log = (key, ...items) => {
-  console.log(key);
-  if(typeof DEBUG !== 'undefined' && DEBUG.includes(key)){
-    switch(key) {
-      case 'app:init':
-        init(...items);
-        console.log(items);
-        break;
-      case 'app:database':
-        init(...items);
-        break;
-      default:
-        console.log(...items);
-    }
-  }
+module.exports = {
+  debugInit,
+  debugDb,
+  debugApi,
+  debugError,
+  debugCommon,
 };
 
-const makeLogger = fixedKey => (...items) => log(fixedKey, ...items);
+// const {
+//   debuggers,
+// } = require('config/vars');
 
-module.exports = makeLogger;
+// const log = (key, ...items) => {
+//   if(debuggers.includes(key)){
+//     // console.log(items);
+//     switch(key) {
+//       case 'app:init':
+//         init(...items);
+//         break;
+//       case 'app:database':
+//         db(...items);
+//         break;
+//       case 'app:api':
+//         api(...items);
+//         break;
+//       case 'app:error':
+//         error(...items);
+//         break;
+//       default:
+//         common(...items);
+//     }
+//   }
+// };
+
+// const makeLogger = fixedKey => (...items) => log(fixedKey, ...items);
+
+// module.exports = makeLogger;
 

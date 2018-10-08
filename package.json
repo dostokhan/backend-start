@@ -4,7 +4,7 @@
   "description": "node start kit",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=. DEBUG='app:*' nodemon index.js",
+    "start": "NODE_PATH=. DEBUG='app:*' DEBUG_COLORS=true nodemon index.js",
     "build": "NODE_PATH=. NODE_ENV=production nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sequelize": "sequelize"

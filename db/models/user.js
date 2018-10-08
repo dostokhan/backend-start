@@ -2,15 +2,24 @@ const mongoose = require('mongoose');
 
 
 const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
+  username: {
+    type: String,
+    min: 4,
+    max: 20,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+
+  },
   // datapoints: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Datapoint' }],
 });
 
 const User = mongoose.model('User', UserSchema);
 
-exports.User = User;
+module.exports = User;
 
 
 

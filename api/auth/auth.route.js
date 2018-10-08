@@ -6,12 +6,12 @@ const router = express.Router();
 
 router
   .route('/signin')
-  .get(controller.signin);
+  .post(controller.signin);
 
 
-// router
-//   .route('/signup')
-//   .post(controller.signup);
+router
+  .route('/signup')
+  .post(controller.signup);
 
 // router
 //   .route('/signout')

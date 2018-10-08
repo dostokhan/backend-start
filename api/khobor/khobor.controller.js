@@ -2,17 +2,18 @@ const httpStatus = require('http-status');
 // const { omit } = require('lodash');
 const Khobor = require('db/models/khobor');
 const User = require('db/models/user');
-const makeLogger = require('helpers/debugger');
+const {
+  debugDb,
+} = require('helpers/debugger');
 // const { handler: errorHandler } = require('../middlewares/error');
 
-const debuggerDb = makeLogger('app:database');
 
 /**
  * Get list
  * @public
  */
 exports.get = async (req, res) => {
-  debuggerDb('Query khobor list');
+  debugDb('Query khobor list');
 
   return Khobor.find({})
   // return Khobor.find({

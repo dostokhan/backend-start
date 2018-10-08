@@ -1,10 +1,11 @@
-const makeLogger = require('helpers/debugger');
 const {
   env,
   port,
 } = require('config/vars');
 
-const debugInit = makeLogger('app:init');
+const {
+  debugInit,
+} = require('helpers/debugger');
 /**
  * Express configuration.
  */
@@ -12,7 +13,7 @@ const server = require('config/express');
 
 
 server.listen(port, () => {
-  debugInit(env);
+  debugInit('NODE_ENV', env);
   debugInit('we are ready :)');
   // console.warn('we are ready :)');
 });
