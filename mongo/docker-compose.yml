@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  backend-mongo:
+    container_name: backend-mongo
+    image: "bitnami/mongodb:latest"
+    volumes:
+      - "mongo_data:/bitnami"
+    env_file:
+      - .env
+    expose:
+      - ${MONGODB_PORT_NUMBER}
+
+
+volumes: 
+  mongo_data:
+
+networks:
+  default:
+    external:
+      name: fullstack 

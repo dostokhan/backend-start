@@ -1,20 +1,15 @@
 # create image based on official node 8 image from Docker
 FROM node:8.10
-# TODO: alpine image doesn't work
-# FROM mhart/alpine-node:8
 
 # set environment
 ENV NPM_CONFIG_LOGLEVEL warn
 # ARG env
 # ENV NOTE_ENV $env
 
-
-
-
 # install dependencies first, in a different location for easier app bind mounting for local development
 WORKDIR /home
-COPY package.json yarn.lock* ./
-RUN yarn install && yarn cache clean
+COPY package.json package-lock.json ./
+RUN npm install 
 ENV PATH /home/node_modules/.bin:$PATH
 
 # check every 30s to ensure this service returns HTTP 200
@@ -24,16 +19,12 @@ ENV PATH /home/node_modules/.bin:$PATH
 WORKDIR /home/app
 COPY . /home/app
 
-# install dependencies for app
-# RUN yarn --pure-lockfile
-
-
 # run app
 CMD [ -f "/bin/bash" ] && if [ ${NODE_ENV} = production ]; \
   then \
-  yarn build; \
+  npm start; \
   else \
-  yarn start; \
+  npm start; \
   fi
-# yarn install; yarn start; \
+# npm install; npm start; \
 

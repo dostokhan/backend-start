@@ -2,51 +2,34 @@ version: '3.3'
 
 
 services:
-  fullstack-backend:
-    container_name: fullstack-backend
-    image: fullstack-backend
+  backend-start:
+    container_name: backend-start
     build:
       context: .
     expose:
       - 8000
+    env_file: 
+      - .env.docker
     volumes:
-      - .:/home/app:delegated
+      - ".:/home/app:delegated"
       # this is a workaround to prevent host node_modules from accidently getting mounted in container
       # in case you want to use node/npm both outside container for test/lint etc. and also inside container
       # this will overwrite the default node_modules dir in container so it won't conflict with our
       # /home/app/node_modules location. Thanks to PR from @brnluiz
-      - notused_node_modules:/home/app/node_modules
+      - "notused_node_modules:/home/app/node_modules"
       # bind-mounting these two files in will let you add packages during development without rebuilding
       # for example, to add bower to your app while developing, just install it inside the container
       # and then nodemon will restart. Your changes will last until you "docker-compose down" and will
       # be saved on host for next build
       # docker-compose exec node npm install --save bower
-      - ./package.json:/home/app/package.json
-      - ./yarn.lock:/home/app/yarn.lock
-    links:
-      # - fullstack-postgres
+      - "./package.json:/home/app/package.json"
+      - "./package-lock.json:/home/app/package-lock.json"
+    external_links:
       - fullstack-mongo
-    # user: 
-    #   ${CURRENT_UID}
-
-  fullstack-mongo:
-    container_name: fullstack-mongo
-    image: 'bitnami/mongodb:latest'
-    ports:
-      - "27017:27017"
-    volumes:
-      - ./volumes/mongo:/data/db
-
-  # fullstack-postgres:
-  #   container_name: fullstack-postgres
-  #   image: postgres:10
-  #   volumes:
-  #     - ./volumes/db:/var/lib/postgresql/data
-
+      # - fullstack-redis
 
 volumes: 
   notused_node_modules:
-  data-volume:
 
 networks:
   default:

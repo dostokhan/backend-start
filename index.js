@@ -1,11 +1,13 @@
+const express = require('express');
+const server = express();
 const {
   env,
   port,
 } = require('config/vars');
 
-const {
-  debugInit,
-} = require('helpers/debugger');
+// const {
+//   debugInit,
+// } = require('helpers/debugger');
 /**
  * Express configuration.
  */

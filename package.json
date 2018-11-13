@@ -1,61 +1,55 @@
 {
-  "name": "imonir.back",
+  "name": "backend-start",
   "version": "1.0.0",
-  "description": "node start kit",
+  "description": "rest api",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=. DEBUG='app:*' DEBUG_COLORS=true nodemon index.js",
-    "build": "NODE_PATH=. NODE_ENV=production nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sequelize": "sequelize"
+    "start": "NODE_PATH=. DEBUG='app:*' DEBUG_COLORS=true nodemon server/index.js",
+    "test": "test",
+    "db:seed": "NODE_PATH=. DEBUG='app:*' node server/db/seed/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/dostokhan/imonir.back.git"
+    "url": "git+ssh://git@gitlab.com/imonir/backend-start.git"
   },
   "keywords": [
-    "node",
-    "express"
+    "ecommerce"
   ],
   "author": "Moniruzzaman Monir",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dostokhan/imonir.back/issues"
+    "url": "https://gitlab.com/imonir/backend-start/issues"
   },
-  "homepage": "https://github.com/dostokhan/imonir.back#readme",
+  "homepage": "https://gitlab.com/imonir/backend-start#readme",
   "dependencies": {
-    "bcrypt": "^3.0.0",
-    "body-parser": "^1.18.2",
-    "compression": "^1.7.1",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
-    "dotenv": "^4.0.0",
-    "express": "^4.16.2",
-    "express-jwt": "^5.3.0",
-    "express-session": "^1.15.6",
-    "express-status-monitor": "^1.0.1",
-    "helmet": "^3.13.0",
-    "http-auth": "^3.2.3",
+    "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "helmet": "^3.14.0",
     "http-status": "^1.2.0",
-    "jsonwebtoken": "^8.1.0",
-    "kue": "^0.11.6",
-    "mongoose": "^5.2.15",
-    "morgan": "^1.9.0",
-    "octonode": "^0.9.1",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "pg": "^7.4.3",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.38.0",
-    "winston": "^3.0.0-rc1"
+    "jsonwebtoken": "^8.3.0",
+    "mkdirp": "^0.5.1",
+    "mongoose": "^5.3.4",
+    "mongoose-paginate-v2": "^1.0.12",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.1",
+    "redis": "^2.8.0",
+    "redux-thunk": "^2.3.0",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "debug": "^4.0.1",
-    "eslint": "^5.3.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^7.0.1",
-    "nodemon": "^1.12.1",
-    "sequelize-cli": "^4.0.0"
+    "faker": "^4.1.0",
+    "mongoose-seed": "^0.5.1",
+    "nodemon": "^1.18.4"
   }
 }
