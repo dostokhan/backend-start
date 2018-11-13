@@ -3,10 +3,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const compression = require('compression');
 const cors = require('cors');
-const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const mongoose = require('mongoose');
+const database = require('config/database');
 
 const {
   debugDb,
@@ -19,51 +18,35 @@ const {
 } = require('api/middlewares/error');
 const routes = require('api/routes/v1');
 const {
+  nodeEnv,
+  host,
+  port,
   corsOrigin,
-  dbUser,
-  dbPass,
-  dbName,
 } = require('config/vars');
 
 
+const dev =  nodeEnv !== 'production';
+debugInit(`NODE_ENV: ${nodeEnv}`);
 // const debugDb = makeLogger('app:database');
 // create express server
 const server = express();
 
-// enable authentication with passport
-server.use(passport.initialize());
-// server.use(passport.session());
-// configure passport
-// require('./passport');
-const strategies = require('./passport');
-passport.use(strategies.jwt);
-// passport.serializeUser(function(user, cb) {
-//   cb(null, user.id);
-// });
-// passport.deserializeUser(function(id, cb) {
-//   User.findById(id, function(err, user) {
-//     cb(err, user);
-//   });
-// });
+// log requests
+server.use(morgan('dev', { stream: { write: msg => debugApi(msg) } }));
 
-// request logging. dev: console | production: file
-server.use(morgan('dev'));
-// server.use(morgan('dev', { stream: { write: msg => debugApi(msg) } }));
-
+// secure apps by setting various HTTP headers
+server.use(helmet());
 
 // parse body params and attache them to req.body
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
-// cookie par
+// cookie parse
 server.use(cookieParser());
-
-// gzip compression
-server.use(compression());
-
-
-// secure apps by setting various HTTP headers
-server.use(helmet());
+// gzip compression in production
+if (nodeEnv=== 'production') {
+  server.use(compression());
+}
 
 // enable CORS - Cross Origin Resource Sharing
 // debugInit('CORS whitelist: ', corsOrigin);
@@ -83,31 +66,12 @@ server.use(
 );
 
 
-//Set up default mongoose connection
-//mongoose.connect('mongodb://username:password@host:port/database');
-const dbURI = `mongodb://${dbUser}:${dbPass}@fullstack-mongo:27017/${dbName}`;
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  autoReconnect: true,
-  reconnectInterval: 1000,
-  reconnectTries: 100,
-});
-mongoose.set('useCreateIndex', true);
-// Get Mongoose to use the global promise library
-mongoose.Promise = global.Promise;
-//Get the default connection
-const db = mongoose.connection;
-//Bind connection to error event (to get notification of connection errors)
-db.on('error', () => {
-  debugDb('MongoDB connection error:')
-});
-db.on('open', () => {
-  debugDb('Database Connected');
-})
+// server static files
+server.use(express.static('public'));
 
 
-
-server.use('/v1', routes);
+// server.use(authorize, authIsOptional);
+// server.use('/v1', routes);
 
 server.use(errorHandler);
 

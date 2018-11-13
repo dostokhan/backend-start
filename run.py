@@ -9,7 +9,7 @@ if sys.argv[1] == 'up':
 elif sys.argv[1] == 'down':
     call(['bash', '-c', 'docker-compose -f docker-compose.yml down'])
 elif sys.argv[1] == 'log':
-    call(['bash', '-c', 'docker-compose logs --follow backend-start'])
+    call(['bash', '-c', 'docker-compose -f docker-compose.yml logs --follow backend-start'])
 elif sys.argv[1] == 'bash':
     call(['bash', '-c', 'docker-compose exec backend-start bash'])
 else:
