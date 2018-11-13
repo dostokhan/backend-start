@@ -11,11 +11,13 @@ const {
 /**
  * Express configuration.
  */
-const server = require('config/express');
+// const server = require('config/express');
 
 
 server.listen(port, () => {
-  debugInit('NODE_ENV', env);
-  debugInit('we are ready :)');
+  console.log('env' + env);
+  console.log('listeningo on ' + port);
+  // debugInit('NODE_ENV', env);
+  // debugInit('we are ready :)');
   // console.warn('we are ready :)');
 });

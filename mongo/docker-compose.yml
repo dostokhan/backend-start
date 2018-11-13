@@ -3,13 +3,13 @@ version: "3.3"
 services:
   backend-mongo:
     container_name: backend-mongo
-    image: "bitnami/mongodb:latest"
+    image: "bitnami/mongodb:4.1"
     volumes:
       - "mongo_data:/bitnami"
     env_file:
       - .env
     expose:
-      - ${MONGODB_PORT_NUMBER}
+      - "29017"
 
 
 volumes: 

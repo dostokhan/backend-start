@@ -14,6 +14,7 @@ email= 'imonir.com@gmail.com'
 containerRedis = 'backend-redis';
 containerMongo = 'backend-mongo';
 containerBack = 'backend-start';
+containerFront = 'frontend-start';
 
 # ENV VARIABLES
 nodeEnv = 'production' if isProduction else 'development'
@@ -29,7 +30,7 @@ databaseUser = 'databaseUser'
 databasePassword = 'asdf23sagf322343likosdahv'
 databaseRootPassword = 'asdf32asdf23aso2134hosdfo3'
 databasePort = '29017'
-mongoExtraFlags = '-wiredTigerCacheSizeGB=2'
+mongoExtraFlags = '--wiredTigerCacheSizeGB=2'
 
 # BACK
 jwtSecret = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(26))
@@ -46,16 +47,15 @@ apiUrlInContainer = f"http://{containerBack}"
 # ENV
 #  redisEnv = f"CONTAINER_REDIS={containerRedis}\n"
 
-#  mongoEnv = f"DOCKER_NETWORK={dockerNetwork}\n"\
-#    f"CONTAINER_MONGO={containerMongo}\n"\
-#    f"MONGODB_EXTRA_FLAGS={mongoExtraFlags}\n"\
-#    f"MONGODB_ROOT_PASSWORD={databaseRootPassword}\n"\
-#    f"MONGODB_PRIMARY_HOST={databaseRootPassword}\n"\
-#    "\n"\
-#    f"MONGODB_DATABASE={databaseName}\n"\
-#    f"MONGODB_USERNAME={databaseUser}\n"\
-#    f"MONGODB_PASSWORD={databasePassword}\n"\
-#    f"MONGODB_PORT_NUMBER={databasePort}\n"
+mongoEnv = f"CONTAINER_MONGO={containerMongo}\n"\
+  f"MONGODB_EXTRA_FLAGS={mongoExtraFlags}\n"\
+  f"MONGODB_ROOT_PASSWORD={databaseRootPassword}\n"\
+  f"MONGODB_PRIMARY_HOST=mongodb-primary\n"\
+  "\n"\
+  f"MONGODB_DATABASE={databaseName}\n"\
+  f"MONGODB_USERNAME={databaseUser}\n"\
+  f"MONGODB_PASSWORD={databasePassword}\n"\
+  f"MONGODB_PORT_NUMBER={databasePort}\n"
 
 
 backEnv = f"NODE_ENV={nodeEnv}\n"\
@@ -106,8 +106,8 @@ with open('./mongo/.env', 'w+') as f:
     f.write(mongoEnv)
 
 # BACK
-with open('./env', 'w+') as f:
-    print('Creating ./env')
+with open('.env', 'w+') as f:
+    print('Creating .env')
     f.write(backEnv)
 
 # FRONT
