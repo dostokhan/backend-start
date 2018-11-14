@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const database = require('config/database');
 
+// TODO packages
+// express-slow-down  // rate limit api requests
+
 const {
   debugDb,
   debugApi,
