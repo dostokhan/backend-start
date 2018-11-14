@@ -1,6 +1,44 @@
 const express = require('express');
 // const validate = require('express-validation');
+const router = express.Router();
 const controller = require('./khobor.controller');
+
+// READ OPERATIONS
+// Get Product List
+router
+  .route('/')
+  .get(controller.list);
+
+// router
+//   .route('/search')
+//   .get(controller.search);
+
+// // Get Product List
+// router
+//   .route('/:id')
+//   .get(controller.get);
+
+
+// // WRITE OPERATIONS
+// Create Product
+// router
+//   .route('/')
+//   .post(isAdmin, controller.create);
+
+// // // Update One Product
+// router
+//   .route('/:id')
+//   .patch(isAdmin, controller.update);
+
+// // // Delete One Product
+// router
+//   .route('/:id')
+//   .delete(isAdmin, controller.remove);
+
+
+
+
+
 // const {
 //   authorize,
 //   // ADMIN,
@@ -13,7 +51,6 @@ const controller = require('./khobor.controller');
   // updateUser,
 // } = require('../../validations/user.validation');
 
-const router = express.Router();
 
 /**
  * Load user when API with userId route parameter is hit
@@ -26,14 +63,6 @@ const router = express.Router();
 
 //   // .post(authorize(), validate(createUser), controller.create);
 //   .post(authorize(), controller.create);
-
-router
-  .route('/')
-  .get(controller.get);
-  // .get((req, res) => {
-  //   res.send({ hola: 'amigo' });
-  // });
-  // .get(authorize(false), controller.list);
 
 // router
 //   .route('/user/:username')

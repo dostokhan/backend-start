@@ -71,7 +71,7 @@ server.use(express.static('public'));
 
 
 // server.use(authorize, authIsOptional);
-// server.use('/v1', routes);
+server.use('/v1', routes);
 
 server.use(errorHandler);
 

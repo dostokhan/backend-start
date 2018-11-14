@@ -1,126 +1,87 @@
 const httpStatus = require('http-status');
-// const { omit } = require('lodash');
-const Khobor = require('db/models/khobor');
-const User = require('db/models/user');
 const {
-  debugDb,
+  debugApi,
+  debugError,
 } = require('helpers/debugger');
-// const { handler: errorHandler } = require('../middlewares/error');
 
 
-/**
- * Get list
- * @public
- */
-exports.get = async (req, res) => {
-  debugDb('Query khobor list');
-
-  return Khobor.find({})
-  // return Khobor.find({
-  //   where: req.query,
-  //   // include: [{ model: User, attributes: { exclude: ["password"] }, required: true }],
-  // })
-    .then(khobors => res.status(200).send(khobors))
-    .catch(error => res.status(400).send(error));
-};
-
-/**
- * Get list by user
- * @public
- */
-exports.getByUser = async (req, res) => {
-  const username = req.params.username;
-  console.log(req.params);
-
-  return User.findOne({
-    where: { username },
-    include: [{
-      model: Khobor
-    }],
-  })
-    .then(khobors => res.status(200).send(khobors))
-    .catch(error => res.status(400).send(error));
-};
+const {
+  // getKhobor,
+  // searchKhobor,
+  listKhobor,
+  // createKhobor,
+  // updateKhobor,
+  // removeKhobor,
+} = require('./khobor.repo');
 
 
-/**
- * Get user
- * @public
- */
-// exports.get = async (req, res) => {
-//   const key = req.params.id;
+// exports.search = async(req, res, next) => {
 //   try {
-//     const note = await Note.get(key);
-//     console.log(note);
-
-//     let content;
-//     try {
-//       content = await getNoteContent(note.slug);
-//     } catch (err) {
-//       console.log(err);
-//       res.status(httpStatus.NOTE_FOUND).end();
-//     }
-
-//     res.status(httpStatus.OK).json({ note, content });
+//     debugApi('search with ' + req.query.q);
+//     const khobors = await searchKhobor(req.query.q);
+//     res.status(httpStatus.OK).send(khobors);
 //   } catch (err) {
-//     res.status(httpStatus.NOT_FOUND).end();
+//     debugError(err);
+//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
 //   }
 // };
 
 
-/**
- * Create new note
- * @private
- */
-// exports.create = async (req, res, next) => {
+// CRUD OPERATIONS
+// exports.get = async(req, res, next) => {
 //   try {
-//     const { note } = req.body;
-//     console.info('CREATE NOTE');
-//     // console.log(note);
-//     const noteObj = await Note.create(note);
-//     // console.log('noteObj');
-//     // console.log(noteObj);
-//     if (noteObj) {
-//       console.log(noteObj);
-//       res.status(httpStatus.CREATED).json(noteObj);
-//     }
-//   } catch (error) {
-//     // res.status(httpStatus.BAD_REQUEST).end(error);
-//     next(error);
+//     const khobor = await getKhobor(req.params.id);
+//     res.status(httpStatus.OK).send(khobor);
+//   } catch (err) {
+//     debugError(err);
+//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
 //   }
 // };
 
-/**
- * Update existing note
- * @public
- */
-// exports.update = (req, res, next) => {
-//   const note = req.body.note;
-//   note.id = req.params.id;
+exports.list = async (req, res, next) => {
+  try {
+    const khobors = await listKhobor(req.query, true);
+    res.status(httpStatus.OK).send(khobors);
+  } catch (err) {
+    debugError(err);
+    res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+  }
+};
 
-//   console.log(note);
-//   console.log(`note: ${note.id}`);
 
-//   Note.update(note)
-//     .then((updatedNote) => {
-//       console.log('UPDATED');
-//       console.log(updatedNote);
-//       res.json(updatedNote);
-//     })
-//     .catch(e => next(e));
+// exports.create  = async (req, res, next) => {
+//   try {
+//     const response = await createKhobor(req.body);
+//     if (!response) {
+//       debugError(response);
+//     }
+//     res.status(httpStatus.OK).send(response);
+//   } catch (err) {
+//     debugError(err);
+//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+//   }
 // };
 
-/**
- * Delete user
- * @public
- */
-// exports.remove = (req, res, next) => {
-//   console.log(`Delete Note: ${req.params.id}`);
+// exports.update = async (req, res, next) => {
+//   try {
+//     const id = req.params.id;
+//     const response = await updateKhobor(id, req.body);
+//     res.status(httpStatus.OK).send(response);
+//   } catch (err) {
+//     debugError(err);
+//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+//   }
+// };
 
-//   Note.remove(req.params.id, req.body.title)
-//     .then(() => res.status(httpStatus.OK).end())
-//     .catch(e => next(e));
 
-//   res.status(httpStatus.NO_CONTENT).end();
+// exports.remove = async (req, res, next) => {
+//   try {
+//     const id = req.params.id;
+//     await removeKhobor(id);
+//     res.status(httpStatus.OK).send({ id });
+//   } catch (err) {
+//     debugError(err);
+//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
+//   }
 // };
 
