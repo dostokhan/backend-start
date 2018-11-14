@@ -50,7 +50,6 @@ apiUrlInContainer = f"http://{containerBack}"
 mongoEnv = f"CONTAINER_MONGO={containerMongo}\n"\
   f"MONGODB_EXTRA_FLAGS={mongoExtraFlags}\n"\
   f"MONGODB_ROOT_PASSWORD={databaseRootPassword}\n"\
-  f"MONGODB_PRIMARY_HOST=mongodb-primary\n"\
   "\n"\
   f"MONGODB_DATABASE={databaseName}\n"\
   f"MONGODB_USERNAME={databaseUser}\n"\

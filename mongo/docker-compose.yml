@@ -3,17 +3,17 @@ version: "3.3"
 services:
   backend-mongo:
     container_name: backend-mongo
-    image: "bitnami/mongodb:4.1"
+    image: "bitnami/mongodb:4.0"
     volumes:
-      - "mongo_data:/bitnami"
+      - "backend-mongo_data:/bitnami"
     env_file:
       - .env
     expose:
-      - "29017"
+      - "27017"
 
 
 volumes: 
-  mongo_data:
+  backend-mongo_data:
 
 networks:
   default:
