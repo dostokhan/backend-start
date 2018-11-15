@@ -21,7 +21,7 @@ nodeEnv = 'production' if isProduction else 'development'
 
 # host names
 virtualHostBack = 'api.fullstack.imonir.com' if isProduction else 'local.api.fullstack.imonir.com'
-virtualHostFront = 'www.fullstack.imonir.com' if isProduction else 'local.www.fullstack.imonir.com'
+virtualHostFront = 'fullstack.imonir.com' if isProduction else 'local.www.fullstack.imonir.com'
 
 
 # DATABASE
