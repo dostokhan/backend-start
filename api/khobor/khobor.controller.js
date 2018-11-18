@@ -42,7 +42,7 @@ exports.list = async (req, res, next) => {
   try {
     // const khobors = await listKhobor(req.query, true);
     // res.status(httpStatus.OK).send(khobors);
-    res.status(httpStatus.OK).send({ hola 'amigo' });
+    res.status(httpStatus.OK).send({ hola: 'amigo' });
   } catch (err) {
     debugError(err);
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err);
